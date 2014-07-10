@@ -1,6 +1,12 @@
-# Jetbrains
-*.idea
-
 # Node
 node_modules
 .DS_Store
+
+# Editor-generated files
+*.swp
+*~
+*.idea
+
+# Temporary files
+.tmp
+test/dummy/vendor

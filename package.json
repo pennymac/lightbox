@@ -1,35 +1,47 @@
 {
-    "name": "ekko-lightbox",
-    "description": "A lightbox gallery plugin for Bootstrap 3 based on the modal plugin",
-    "version": "3.1.4",
-    "keywords": [
-        "lightbox",
-        "gallery",
-        "bootstrap",
-        "jquery",
-        "modal"
-    ],
-    "homepage": "https://github.com/ashleydw/lightbox",
-    "author": "ashleydw <hello@ashleyd.ws>",
-    "style": "./dist/ekko-lightbox.css",
-    "less": "ekko-lightbox.less",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ashleydw/lightbox.git"
-    },
-    "bugs": {
-        "url": "https://github.com/ashleydw/lightbox/issues"
-    },
-    "license": {
-        "type": "GNU GENERAL PUBLIC LICENSE",
-        "url": "https://github.com/ashleydw/lightbox/blob/master/LICENSE.txt"
-    },
-    "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-banner": "~0.2.0",
-        "grunt-contrib-coffee": "~0.8.0",
-        "grunt-contrib-uglify": "~0.2.2",
-        "grunt-contrib-watch": "~0.5.1",
-        "grunt-recess": "~0.3.3"
-    }
+  "name": "ekko-lightbox",
+  "description": "A lightbox gallery plugin for Bootstrap 3 based on the modal plugin",
+  "version": "3.1.4",
+  "keywords": [
+    "lightbox",
+    "gallery",
+    "bootstrap",
+    "jquery",
+    "modal"
+  ],
+  "homepage": "https://github.com/ashleydw/lightbox",
+  "author": "ashleydw <hello@ashleyd.ws>",
+  "style": "./dist/ekko-lightbox.css",
+  "less": "ekko-lightbox.less",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ashleydw/lightbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ashleydw/lightbox/issues"
+  },
+  "license": {
+    "type": "GNU GENERAL PUBLIC LICENSE",
+    "url": "https://github.com/ashleydw/lightbox/blob/master/LICENSE.txt"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-banner": "~0.2.0",
+    "grunt-bump": "0.0.14",
+    "grunt-concurrent": "^0.5.0",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-coffee": "^0.10.1",
+    "grunt-contrib-connect": "^0.8.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "~0.5.1",
+    "grunt-karma": "^0.8.3",
+    "grunt-recess": "~0.3.3",
+    "grunt-wiredep": "^1.8.0",
+    "js2coffee": "^0.3.0",
+    "karma": "^0.12.16",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-coffee-preprocessor": "^0.2.1",
+    "karma-jasmine": "^0.1.5",
+    "load-grunt-tasks": "^0.6.0"
+  }
 }
