@@ -11,8 +11,7 @@ module.exports = (config) ->
     
     # list of files / patterns to load in the browser
     files: [
-      "dummy/bower_components/angular/angular.js"
-      "dummy/bower_components/angular-mocks/angular-mocks.js"
+      "test/dummy/vendor/*.js"
       "src/*.coffee"
       "test/*.coffee"
       ]

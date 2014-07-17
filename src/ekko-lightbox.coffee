@@ -10,19 +10,95 @@ $ = jQuery
 
 EkkoLightbox = ( element, options ) ->
 
-	@options = $.extend({
-		title : null
-		footer : null
-		remote : null
-	}, $.fn.ekkoLightbox.defaults, options || {})
+  @options = $.extend({
+    title: null
+    footer: null
+    remote: null
+  }, $.fn.ekkoLightbox.defaults, options || {})
 
-	@$element = $(element)
-	content = ''
+  @$element = $(element)
+  content = ''
 
-	@modal_id = if @options.modal_id then @options.modal_id else 'ekkoLightbox-' + Math.floor((Math.random() * 1000) + 1)
-	header = '<div class="modal-header"'+(if @options.title or @options.always_show_close then '' else ' style="display:none"')+'><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title">' + (@options.title || "&nbsp;") + '</h4></div>'
-	footer = '<div class="modal-footer"'+(if @options.footer then '' else ' style="display:none"')+'>' + @options.footer + '</div>'
-	$(document.body).append '<div id="' + @modal_id + '" class="ekko-lightbox modal fade" tabindex="-1"><div class="modal-dialog"><div class="modal-content">' + header + '<div class="modal-body"><div class="ekko-lightbox-container"><div></div></div></div>' + footer + '</div></div></div>'
+  generatedId = ->
+    Math.floor((Math.random() * 1000) + 1)
+
+  modalId =
+    if @options.modalId
+    then @options.modalId
+    else 'ekkoLightbox-' + generatedId()
+
+  newHeader =
+    """
+    <div class="modal-header" #{ }>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">#{ }</h4>
+    </div>
+    """
+  newFooter =
+    """
+    <div class="modal-footer" #{ }>
+    #{ }
+    </div>
+    """
+  modalElementTemplate =
+    """
+    <div id="#{modalId}" class="ekko-lightbox modal fade" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          #{newHeader}
+          <div class="modal-body">
+            <div class="ekko-lightbox-container">
+            </div>
+          </div>
+          #{newFooter}
+        </div>
+      </div>
+    </div>
+    """
+
+  # Can only be done after the element has been appended to the DOM
+  createModal = (modalId) ->
+    element = $("##{modalId)}")
+
+    element: element
+    dialog: element.children('.modal-dialog:first')
+    content: element.children('.modal-content:first')
+    body: element.children('.modal-body:first')
+
+  modal = createModal(modalId)
+
+  measureBoundingBox = (elements...) ->
+    (attribute) ->
+      sumTotal = 0
+      pixels = (parseFloat(element.css(attribute)) for element in elements)
+      for p in pixels
+        sumTotal += p
+      sumTotal
+
+  modalBoundingBox = measureBoundingBox(modal.dialog, modal.content, modal.body) 
+
+  lightbox =
+    container: null
+    body: null
+    border:
+      top: modalBoundingBox('border-top-width')
+      bottom: modalBoundingBox('border-bottom-width')
+      right: modalBoundingBox('border-right-width')
+      left: modalBoundingBox('border-left-width')
+    padding:
+      top: modalBoundingBox('padding-top')
+      bottom: modalBoundingBox('padding-bottom')
+      right: modalBoundingBox('padding-right')
+      left: modalBoundingBox('padding-left')
+
+    
+
+  @modal_id = if @options.modal_id then @options.modal_id else 'ekkoLightbox-' + Math.floor((Math.random() * 1000) + 1)
+
+  header = '<div class="modal-header"'+(if @options.title or @options.always_show_close then '' else ' style="display:none"')+'><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title">' + (@options.title || "&nbsp;") + '</h4></div>'
+  footer = '<div class="modal-footer"'+(if @options.footer then '' else ' style="display:none"')+'>' + @options.footer + '</div>'
+  $(document.body).append '<div id="' + @modal_id + '" class="ekko-lightbox modal fade" tabindex="-1"><div class="modal-dialog"><div class="modal-content">' + header + '<div class="modal-body"><div class="ekko-lightbox-container"><div></div></div></div>' + footer + '</div></div></div>'
+
 
 	@modal = $ '#' + @modal_id
 	@modal_dialog = @modal.find('.modal-dialog').first()
@@ -96,6 +172,7 @@ EkkoLightbox.prototype = {
 				if @options.type == 'image'
 					@preloadImage(@options.remote, true)
 				else if @options.type == 'youtube' && video_id = @getYoutubeId(@options.remote)
+                                  # playVideo
 					@showYoutubeVideo(video_id)
 				else if @options.type == 'vimeo'
 					@showVimeoVideo(@options.remote)
@@ -108,29 +185,28 @@ EkkoLightbox.prototype = {
 				@detectRemoteType(@options.remote)
 
 	strip_stops: (str) ->
-		str.replace(/\./g, '')
+	  str.replace(/\./g, '')
 
 	strip_spaces: (str) ->
-		str.replace(/\s/g, '')
+	  str.replace(/\s/g, '')
 
 	isImage: (str) ->
-		str.match(/(^data:image\/.*,)|(\.(jp(e|g|eg)|gif|png|bmp|webp|svg)((\?|#).*)?$)/i)
+	  str.match(/(^data:image\/.*,)|(\.(jp(e|g|eg)|gif|png|bmp|webp|svg)((\?|#).*)?$)/i)
 
 	isSwf: (str) ->
-		str.match(/\.(swf)((\?|#).*)?$/i)
+          str.match(/\.(swf)((\?|#).*)?$/i)
 
 	getYoutubeId: (str) ->
-		match = str.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
-		if match && match[2].length == 11 then match[2] else false
+	  match = str.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
+	  if match && match[2].length == 11 then match[2] else false
 
 	getVimeoId: (str) ->
-		if str.indexOf('vimeo') > 0 then str else false
+	  if str.indexOf('vimeo') > 0 then str else false
 
 	getInstagramId: (str) ->
-		if str.indexOf('instagram') > 0 then str else false
+	  if str.indexOf('instagram') > 0 then str else false
 
 	navigate : ( event ) ->
-
 		event = event || window.event;
 		if event.keyCode == 39 || event.keyCode == 37
 			if event.keyCode == 39

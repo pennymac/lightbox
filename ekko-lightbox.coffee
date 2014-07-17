@@ -189,51 +189,51 @@ EkkoLightbox.prototype = {
 			@error "Could not detect remote target type. Force the type using data-type=\"image|youtube|vimeo\""
 
 	updateTitleAndFooter: ->
-		header = @modal_content.find('.modal-header')
-		footer = @modal_content.find('.modal-footer')
-		title = @$element.data('title') || ""
-		caption = @$element.data('footer') || ""
+          header = @modal_content.find('.modal-header')
+          footer = @modal_content.find('.modal-footer')
+          title = @$element.data('title') || ""
+          caption = @$element.data('footer') || ""
 
-		if title or @options.always_show_close then header.css('display', '').find('.modal-title').html(title || "&nbsp;") else header.css('display', 'none')
-		if caption then footer.css('display', '').html(caption) else footer.css('display', 'none')
-		@
+          if title or @options.always_show_close then header.css('display', '').find('.modal-title').html(title || "&nbsp;") else header.css('display', 'none')
+          if caption then footer.css('display', '').html(caption) else footer.css('display', 'none')
+          @
 
 	showLoading : ->
-		@lightbox_body.html '<div class="modal-loading">Loading..</div>'
-		@
+	  @lightbox_body.html '<div class="modal-loading">Loading..</div>'
+	  @
 
-	showYoutubeVideo : (id) ->
-		aspectRatio = 560/315
-		width = @$element.data('width') || 560
-		width = @checkDimensions width
-		height = width / aspectRatio
-		@resize width
-		@lightbox_body.html '<iframe width="'+width+'" height="'+height+'" src="//www.youtube.com/embed/' + id + '?badge=0&autoplay=1&html5=1&rel=0" frameborder="0" allowfullscreen></iframe>'
-		if @modal_arrows #hide the arrows when showing video
-			@modal_arrows.css 'display', 'none'
+	showYoutubeVideo: (id) ->
+	  aspectRatio = 560/315
+	  width = @$element.data('width') || 560
+	  width = @checkDimensions width
+	  height = width / aspectRatio
+	  @resize width
+	  @lightbox_body.html '<iframe width="'+width+'" height="'+height+'" src="//www.youtube.com/embed/' + id + '?badge=0&autoplay=1&html5=1&rel=0" frameborder="0" allowfullscreen></iframe>'
+	  if @modal_arrows #hide the arrows when showing video
+	    @modal_arrows.css 'display', 'none'
 
-	showVimeoVideo : (id) ->
-		aspectRatio = 500/281
-		width = @$element.data('width') || 560
-		width = @checkDimensions width
-		height = width / aspectRatio
-		@resize width
-		@lightbox_body.html '<iframe width="'+width+'" height="'+height+'" src="' + id + '?autoplay=1" frameborder="0" allowfullscreen></iframe>'
-		if @modal_arrows #hide the arrows when showing video
-			@modal_arrows.css 'display', 'none'
+	showVimeoVideo: (id) ->
+	  aspectRatio = 500/281
+	  width = @$element.data('width') || 560
+	  width = @checkDimensions width
+	  height = width / aspectRatio
+	  @resize width
+	  @lightbox_body.html '<iframe width="'+width+'" height="'+height+'" src="' + id + '?autoplay=1" frameborder="0" allowfullscreen></iframe>'
+	  if @modal_arrows #hide the arrows when showing video
+	    @modal_arrows.css 'display', 'none'
 
 	showInstagramVideo : (id) ->
-		width = @$element.data('width') || 612
-		width = @checkDimensions width
-		height = width
-		@resize width
-		@lightbox_body.html '<iframe width="'+width+'" height="'+height+'" src="' + @addTrailingSlash(id) + 'embed/" frameborder="0" allowfullscreen></iframe>'
-		if @modal_arrows #hide the arrows when showing video
-			@modal_arrows.css 'display', 'none'
+	  width = @$element.data('width') || 612
+	  width = @checkDimensions width
+	  height = width
+	  @resize width
+	  @lightbox_body.html '<iframe width="'+width+'" height="'+height+'" src="' + @addTrailingSlash(id) + 'embed/" frameborder="0" allowfullscreen></iframe>'
+	  if @modal_arrows #hide the arrows when showing video
+	    @modal_arrows.css 'display', 'none'
 
 	error : ( message ) ->
-		@lightbox_body.html message
-		@
+	  @lightbox_body.html message
+	  @
 
 	preloadImage : ( src, onLoadShowImage) ->
 
@@ -263,23 +263,23 @@ EkkoLightbox.prototype = {
 		@
 
 	checkDimensions: (width) ->
-		#check that the width given can be displayed, if not return the maximum size that can be
+	  #check that the width given can be displayed, if not return the maximum size that can be
 
-		width_total = width + @border.left + @padding.left + @padding.right + @border.right
-		body_width = document.body.clientWidth
+	  width_total = width + @border.left + @padding.left + @padding.right + @border.right
+	  body_width = document.body.clientWidth
 
-		if width_total > body_width
-			width = @modal_body.width()
+	  if width_total > body_width
+	    width = @modal_body.width()
 
-		width
+	  width
 
-	close : ->
-		@modal.modal('hide');
+	close: ->
+	  @modal.modal('hide');
 
 	addTrailingSlash: (url) ->
-		if url.substr(-1) != '/'
-			url += '/'
-		url
+	  if url.substr(-1) != '/'
+	    url += '/'
+	  url
 }
 
 $.fn.ekkoLightbox = ( options ) ->
